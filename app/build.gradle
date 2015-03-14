@@ -29,7 +29,7 @@ android {
     }
     play {
          serviceAccountEmail = '868554619222-3qv79chn8jevepg0lerp65i56ep3vhah@developer.gserviceaccount.com'
-         pk12File = file('/home/dagar/google_play-8954c058b4aa.p12')
+         pk12File = file(System.getenv("ANDROIDAPP_GOOGLE_PLAY_SERVICE_KEY"))
          track = 'beta' // 'production' or 'beta' or 'alpha'
          uploadImages = true
     }
