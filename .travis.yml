@@ -13,17 +13,21 @@ android:
   - build-tools-21.1.1
   - extra-android-m2repository
   - extra-google-m2repository
+
+before_install:
+  - openssl aes-256-cbc -K $encrypted_5cc4aa28caa7_key -iv $encrypted_5cc4aa28caa7_iv
+    -in androidpublish.tar.enc -out androidpublish.tar -d
+  - tar xvf androidpublish.tar
+
 script:
-- ./gradlew build
-- ! '[ "${TRAVIS_PULL_REQUEST}" = "false" ] && ./gradlew publishRelease'
+  - ./gradlew build
+
+after_success:
+  - '[ "${TRAVIS_PULL_REQUEST}" = "false" ] && ./gradlew publishRelease || false'
+
 notifications:
   webhooks:
     urls:
     - https://webhooks.gitter.im/e/db909d2de354884f570f
     on_success: change
     on_failure: always
-    on_start: false
-before_install:
-- openssl aes-256-cbc -K $encrypted_5cc4aa28caa7_key -iv $encrypted_5cc4aa28caa7_iv
-  -in androidpublish.tar.enc -out androidpublish.tar -d
-- tar xvf androidpublish.tar
