@@ -7,21 +7,24 @@ android:
     # - tools
 
     # The BuildTools version used by your project
-    - build-tools-21.0.0
+    - build-tools-21.1.1
 
     # The SDK version used to compile your project
     - android-21
 
     # Additional components
-    - extra-google-google_play_services
-    - extra-google-m2repository
-    - extra-android-m2repository
-    - addon-google_apis-google-16
+    #- extra-google-google_play_services
+    #- extra-google-m2repository
+    #- extra-android-m2repository
+    #- addon-google_apis-google-16
 
     # Specify at least one system image,
     # if you need to run emulator(s) during your tests
-    - sys-img-armeabi-v7a-android-21
-    - sys-img-x86-android-21
+    #- sys-img-armeabi-v7a-android-21
+    #- sys-img-x86-android-21
+
+script:
+  - ./gradlew build
 
 notifications:
   webhooks:
