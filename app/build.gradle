@@ -12,14 +12,15 @@ android {
 
 	// Fetch the version according to git latest tag and "how far are we from last tag"
 	def longVersionName = "git -C ${rootDir} describe --tags --long".execute().text.trim()
-	def (fullVersionTag, versionBuild, gitSha) = longVersionName.tokenize('-')
-	def (versionMajor, versionMinor, versionPatch) = fullVersionTag.tokenize('.')
-
     printf("\nlongVersionName " + longVersionName)
+
+	def (fullVersionTag, versionBuild, gitSha) = longVersionName.tokenize('-')
     printf("\nfullVersionTag " + fullVersionTag)
     printf("\nversionBuild " + versionBuild)
     printf("\ngitSha " + gitSha)
- 
+
+	def (versionMajor, versionMinor, versionPatch) = fullVersionTag.tokenize('.')
+
 	// Set the version name
 	versionName "$versionMajor.$versionMinor.$versionPatch($versionBuild)"
         
