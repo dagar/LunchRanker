@@ -10,29 +10,34 @@ android {
         minSdkVersion 16
         targetSdkVersion 21
 
-	// Fetch the version according to git latest tag and "how far are we from last tag"
-	def longVersionName = "git -C ${rootDir} describe --tags --long".execute().text.trim()
-    printf("\nlongVersionName " + longVersionName)
+        // Fetch the version according to git latest tag and "how far are we from last tag"
+        def longVersionName = "git -C ${rootDir} describe --tags --long".execute().text.trim()
+        printf("\nlongVersionName " + longVersionName)
 
-	def (fullVersionTag, versionBuild, gitSha) = longVersionName.tokenize('-')
-    printf("\nfullVersionTag " + fullVersionTag)
-    printf("\nversionBuild " + versionBuild)
-    printf("\ngitSha " + gitSha)
+        def (fullVersionTag, versionBuild, gitSha) = longVersionName.tokenize('-')
+        printf("\nfullVersionTag " + fullVersionTag)
+        printf("\nversionBuild " + versionBuild)
+        printf("\ngitSha " + gitSha)
 
-	def (versionMajor, versionMinor, versionPatch) = fullVersionTag.tokenize('.')
+        def (fullVersionTagInteger) = fullVersionTag.tokenize('v')
+        def (versionMajor, versionMinor, versionPatch) = fullVersionTagInteger.tokenize('.')
 
-	// Set the version name
-	versionName "$versionMajor.$versionMinor.$versionPatch($versionBuild)"
-        
-	// Turn the version name into a version code
-	versionCode versionMajor.toInteger() * 100000 +
-		versionMinor.toInteger() * 10000 +
-		versionPatch.toInteger() * 1000 +
-		versionBuild.toInteger()
+        printf("\nversionMajor " + versionMajor)
+        printf("\nversionMinor " + versionMinor)
+        printf("\nversionPatch " + versionPatch)
 
-	// Friendly print the version output to the Gradle console
-	printf("\n--------" + "VERSION DATA--------" + "\n" + "- CODE: " + versionCode + "\n" + 
-		"- NAME: " + versionName + "\n----------------------------\n")
+        // Set the version name
+        versionName "$versionMajor.$versionMinor.$versionPatch($versionBuild)"
+
+        // Turn the version name into a version code
+        versionCode versionMajor.toInteger() * 100000 +
+                versionMinor.toInteger() * 10000 +
+                versionPatch.toInteger() * 1000 +
+                versionBuild.toInteger()
+
+        // Friendly print the version output to the Gradle console
+        printf("\n--------" + "VERSION DATA--------" + "\n" + "- CODE: " + versionCode + "\n" +
+                "- NAME: " + versionName + "\n----------------------------\n")
     }
     signingConfigs {
         release {
@@ -40,7 +45,7 @@ android {
             storePassword System.getenv("ANDROIDAPP_KEYSTORE_PASSWORD")
             keyAlias System.getenv("ANDROIDAPP_KEY_ALIAS")
             keyPassword System.getenv("ANDROIDAPP_KEY_PASSWORD")
-         }
+        }
     }
     buildTypes {
         release {
@@ -50,10 +55,10 @@ android {
         }
     }
     play {
-         serviceAccountEmail = '868554619222-3qv79chn8jevepg0lerp65i56ep3vhah@developer.gserviceaccount.com'
-         pk12File = file(System.getenv("ANDROIDAPP_GOOGLE_PLAY_SERVICE_KEY"))
-         track = 'beta' // 'production' or 'beta' or 'alpha'
-         uploadImages = true
+        serviceAccountEmail = '868554619222-3qv79chn8jevepg0lerp65i56ep3vhah@developer.gserviceaccount.com'
+        pk12File = file(System.getenv("ANDROIDAPP_GOOGLE_PLAY_SERVICE_KEY"))
+        track = 'beta' // 'production' or 'beta' or 'alpha'
+        uploadImages = true
     }
 }
 
