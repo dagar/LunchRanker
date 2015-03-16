@@ -16,6 +16,7 @@ android:
   - extra-google-m2repository
 
 before_install:
+  - if [ -f .git/shallow ]; then git fetch --unshallow; fi
   - openssl aes-256-cbc -K $encrypted_5cc4aa28caa7_key -iv $encrypted_5cc4aa28caa7_iv
     -in androidpublish.tar.enc -out androidpublish.tar -d
   - tar xvf androidpublish.tar
