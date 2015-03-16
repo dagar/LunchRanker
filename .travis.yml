@@ -7,6 +7,7 @@ env:
   - secure: fz2BaF5EyB2QGHXR7HRJsLlW1U9hId02SVR/9TLsJ10SJccXEkbR2lcFudEhx/ibZWB8KxFBQ1IfWM+UVoAekSa+np39c/FD3qSoccZRtifmT9OT6yV5tCuCdRU2zuM2Jht1UV9LrG87CmZOD190fvQVorTKCw/BfsqenSgApSk=
   - secure: fBDZluQqonzZPk70eed0xK9n5vxuifJZzQjjVI2HBXZG4z9S8MW/hDmPIw57ECWI+MUN8K5paSQjvti17+RaeN2QZQJYTcUEwY4fTqcJUDEgKKl5CsgYkEq0HCxtmpTTt6L/WrHdLTeE7iXAH2fH9wzVM4HeC1SFqvgwpygM0aM=
   - secure: EM0X0WNUYkz11xte+XevMl5c75D5lTy4yWTd/tv8A6mBLSkMbt/+zri2HchZKRmWr+XvBzbZ+IFI6UBtZ+Jsn8L/n3CU91LScoRbMxB0edVp/w5XErikYcwJaSRmjt6i5zEalL0Uq0pmRmBrjigbcUYVSSy4pedMNlCsqfuekSw=
+
 android:
   components:
   - android-21
@@ -18,6 +19,9 @@ before_install:
   - openssl aes-256-cbc -K $encrypted_5cc4aa28caa7_key -iv $encrypted_5cc4aa28caa7_iv
     -in androidpublish.tar.enc -out androidpublish.tar -d
   - tar xvf androidpublish.tar
+
+install:
+  - ./gradlew androidDependencies
 
 script:
   - ./gradlew build
