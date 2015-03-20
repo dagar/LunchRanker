@@ -7,3 +7,6 @@ LunchRanker
 [![alt text](https://developer.android.com/images/brand/en_generic_rgb_wo_45.png "Lunch Ranker on Google Play")](https://play.google.com/store/apps/details?id=ca.dagar.lunchranker)
 
 https://play.google.com/store/apps/details?id=ca.dagar.lunchranker
+
+
+Lunch Ranker is completely open source. New commits succesfully built by travis are automatically published to Google Play.
