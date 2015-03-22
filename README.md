@@ -10,3 +10,5 @@ https://play.google.com/store/apps/details?id=ca.dagar.lunchranker
 
 
 Lunch Ranker is completely open source. New commits succesfully built by travis are automatically published to Google Play.
+
+Join the Google+ beta tester community. https://plus.google.com/communities/105981042736744264416
