@@ -29,6 +29,7 @@ script:
 
 after_success:
   - '[ "${TRAVIS_PULL_REQUEST}" = "false" ] && [ "${TRAVIS_BRANCH}" = "master" ] && ./gradlew publishRelease || false'
+  - '[ "${TRAVIS_PULL_REQUEST}" = "false" ] && [ "${TRAVIS_BRANCH}" = "master" ] && ./gradlew appengineUpdate || false'
 
 notifications:
   webhooks:
