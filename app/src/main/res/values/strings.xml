@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="app_name">Lunch Ranker</string>
-    <string name="label_btn_find">Find</string>
+    <string name="label_btn_submit">Submit</string>
 </resources>

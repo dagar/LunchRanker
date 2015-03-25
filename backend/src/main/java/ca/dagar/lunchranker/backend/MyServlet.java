@@ -26,6 +26,6 @@ public class MyServlet extends HttpServlet {
         if (name == null) {
             resp.getWriter().println("Please enter a name");
         }
-        resp.getWriter().println("Hello " + name);
+        resp.getWriter().println("Howdy " + name);
     }
 }

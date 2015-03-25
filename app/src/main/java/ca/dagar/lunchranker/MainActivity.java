@@ -1,11 +1,11 @@
 package ca.dagar.lunchranker;
 
-import android.location.Criteria;
+import android.content.Context;
 import android.location.Location;
 import android.location.LocationListener;
-import android.location.LocationManager;
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
+import android.util.Pair;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
@@ -15,7 +15,6 @@ import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.GooglePlayServicesUtil;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
-import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.LatLng;
 
 public class MainActivity extends FragmentActivity implements LocationListener {
@@ -37,8 +36,10 @@ public class MainActivity extends FragmentActivity implements LocationListener {
         }
         setContentView(R.layout.activity_main);
 
+        Button btnSubmit = (Button) findViewById(R.id.btnSubmit);
         placeText = (EditText) findViewById(R.id.placeText);
-        Button btnFind = (Button) findViewById(R.id.btnFind);
+
+  /*
         SupportMapFragment fragment = (SupportMapFragment) getSupportFragmentManager().findFragmentById(R.id.googleMap);
         googleMap = fragment.getMap();
         googleMap.setMyLocationEnabled(true);
@@ -49,12 +50,14 @@ public class MainActivity extends FragmentActivity implements LocationListener {
         if (location != null) {
             onLocationChanged(location);
         }
-        locationManager.requestLocationUpdates(bestProvider, 20000, 0, this);
+        locationManager.requestLocationUpdates(bestProvider, 20000, 0, this);*/
 
-        btnFind.setOnClickListener(new OnClickListener() {
+        btnSubmit.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
-                System.out.println(placeText.getText().toString());
+                new ServletPostAsyncTask().execute(new Pair<Context, String>(v.getContext(), placeText.getText().toString()));
+
+                //System.out.println(placeText.getText().toString());
 /*                String type = placeText.getText().toString();
                 StringBuilder googlePlacesUrl = new StringBuilder("https://maps.googleapis.com/maps/api/place/nearbysearch/json?");
                 googlePlacesUrl.append("location=" + latitude + "," + longitude);
