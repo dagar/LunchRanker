@@ -29,7 +29,7 @@ class ServletPostAsyncTask extends AsyncTask<Pair<Context, String>, Void, String
 
         HttpClient httpClient = new DefaultHttpClient();
         //HttpPost httpPost = new HttpPost("http://10.0.2.2:8080/hello"); // 10.0.2.2 is localhost's IP address in Android emulator
-        HttpPost httpPost = new HttpPost("http://model-block-780.appspot.com/hello");
+        HttpPost httpPost = new HttpPost("http://model-block-780.appspot.com/location");
 
         try {
             // Add name data to request

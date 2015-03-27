@@ -1,16 +1,10 @@
-/*
-   For step-by-step instructions on connecting your Android application to this backend module,
-   see "App Engine Java Servlet Module" template documentation at
-   https://github.com/GoogleCloudPlatform/gradle-appengine-templates/tree/master/HelloWorld
-*/
-
 package ca.dagar.lunchranker.backend;
 
 import java.io.IOException;
 
 import javax.servlet.http.*;
 
-public class MyServlet extends HttpServlet {
+public class LunchRankerServlet extends HttpServlet {
     @Override
     public void doGet(HttpServletRequest req, HttpServletResponse resp)
             throws IOException {
@@ -23,6 +17,7 @@ public class MyServlet extends HttpServlet {
             throws IOException {
         String name = req.getParameter("name");
         resp.setContentType("text/plain");
+	//resp.getPathInfo(); - use this with wildcard
         if (name == null) {
             resp.getWriter().println("Please enter a name");
         }
