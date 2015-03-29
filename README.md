@@ -20,3 +20,6 @@ The gradle build needs these environment variables set.
     export ANDROIDAPP_KEY_ALIAS=MyReleaseKey
     export ANDROIDAPP_KEY_PASSWORD=********
 
+**Backend**
+
+Currently the backend must be deployed manually through Android Developer Studio or `./gradlew appengineUpdateBackend`
