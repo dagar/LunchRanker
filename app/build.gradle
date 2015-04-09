@@ -60,6 +60,11 @@ android {
         track = 'beta' // 'production' or 'beta' or 'alpha'
         uploadImages = true
     }
+    lintOptions {
+        abortOnError true
+        ignoreWarnings false
+        quiet false
+    }
 }
 
 dependencies {
