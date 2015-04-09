@@ -8,6 +8,10 @@ env:
   - secure: fBDZluQqonzZPk70eed0xK9n5vxuifJZzQjjVI2HBXZG4z9S8MW/hDmPIw57ECWI+MUN8K5paSQjvti17+RaeN2QZQJYTcUEwY4fTqcJUDEgKKl5CsgYkEq0HCxtmpTTt6L/WrHdLTeE7iXAH2fH9wzVM4HeC1SFqvgwpygM0aM=
   - secure: EM0X0WNUYkz11xte+XevMl5c75D5lTy4yWTd/tv8A6mBLSkMbt/+zri2HchZKRmWr+XvBzbZ+IFI6UBtZ+Jsn8L/n3CU91LScoRbMxB0edVp/w5XErikYcwJaSRmjt6i5zEalL0Uq0pmRmBrjigbcUYVSSy4pedMNlCsqfuekSw=
 
+cache:
+  directories:
+    - $HOME/.gradle
+
 android:
   components:
   - android-21
