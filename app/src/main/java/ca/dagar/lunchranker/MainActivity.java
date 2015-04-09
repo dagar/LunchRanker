@@ -20,10 +20,10 @@ import com.google.android.gms.maps.model.LatLng;
 public class MainActivity extends FragmentActivity implements LocationListener {
 
     private static final String GOOGLE_API_KEY = "AIzaSyCXMbO5daZfLTxte1Z4ngJTv6Pe6pGdpkQ";
-    GoogleMap googleMap;
-    EditText placeText;
-    double latitude = 0;
-    double longitude = 0;
+    private GoogleMap googleMap;
+    private EditText placeText;
+    private double latitude = 0;
+    private double longitude = 0;
     private int PROXIMITY_RADIUS = 5000;
 
     @Override
@@ -55,7 +55,7 @@ public class MainActivity extends FragmentActivity implements LocationListener {
         btnSubmit.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
-                new ServletPostAsyncTask().execute(new Pair<Context, String>(v.getContext(), placeText.getText().toString()));
+                new ServletPostAsyncTask().execute(new Pair<>(v.getContext(), placeText.getText().toString()));
 
                 //System.out.println(placeText.getText().toString());
 /*                String type = placeText.getText().toString();

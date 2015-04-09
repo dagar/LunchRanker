@@ -33,7 +33,7 @@ class ServletPostAsyncTask extends AsyncTask<Pair<Context, String>, Void, String
 
         try {
             // Add name data to request
-            List<NameValuePair> nameValuePairs = new ArrayList<NameValuePair>(1);
+            List<NameValuePair> nameValuePairs = new ArrayList<>(1);
             nameValuePairs.add(new BasicNameValuePair("name", name));
             httpPost.setEntity(new UrlEncodedFormEntity(nameValuePairs));
 
