@@ -12,8 +12,14 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.Toast;
 
+import com.naxsoft.lunchinhell.data.RestaurantDS;
+import com.naxsoft.lunchinhell.domain.Restaurant;
+
+import java.util.Collection;
+
 
 public class VotingActivity extends Activity implements VoteItemFragment.OnFragmentInteractionListener, NavigationFragment.OnFragmentInteractionListener {
+    RestaurantDS restaurantDS = new RestaurantDS();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -22,8 +28,9 @@ public class VotingActivity extends Activity implements VoteItemFragment.OnFragm
 
         FragmentManager fragmentManager = getFragmentManager();
         FragmentTransaction transaction = fragmentManager.beginTransaction();
-        for (int i = 0 ; i < 3; i++) {
-            transaction.add(R.id.votingList, VoteItemFragment.newInstance("Test " + 1, "" + i), "" + i);
+        Collection<Restaurant> restaurants = restaurantDS.getRestaurants();
+        for (Restaurant r : restaurants) {
+            transaction.add(R.id.votingList, VoteItemFragment.newInstance(r));
         }
         transaction.commit();
     }

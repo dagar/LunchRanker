@@ -7,7 +7,11 @@ import android.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
+
+import com.naxsoft.lunchinhell.data.VoteDS;
+import com.naxsoft.lunchinhell.domain.Vote;
 
 
 /**
@@ -25,8 +29,8 @@ public class VoteResultFragment extends Fragment {
 
     // TODO: Rename and change types of parameters
     private String restaurantName;
-    private String restaurantId;
-    private String voteCount;
+    private int restaurantId;
+    private int voteCount;
 
     private OnFragmentInteractionListener mListener;
 
@@ -34,18 +38,16 @@ public class VoteResultFragment extends Fragment {
      * Use this factory method to create a new instance of
      * this fragment using the provided parameters.
      *
-     * @param restaurantName Parameter 1.
-     * @param restaurantId Parameter 2.
-     * @param voteCount Parameter 2.
+     * @param vote Parameter 1.
      * @return A new instance of fragment VoteResultFragment.
      */
     // TODO: Rename and change types and number of parameters
-    public static VoteResultFragment newInstance(String restaurantName, String restaurantId, String voteCount) {
+    public static VoteResultFragment newInstance(Vote vote) {
         VoteResultFragment fragment = new VoteResultFragment();
         Bundle args = new Bundle();
-        args.putString(ARG_PARAM1, restaurantName);
-        args.putString(ARG_PARAM2, restaurantId);
-        args.putString(ARG_PARAM3, voteCount);
+        args.putString(ARG_PARAM1, vote.getRestaurant().getName());
+        args.putInt(ARG_PARAM2, vote.getRestaurant().getId());
+        args.putInt(ARG_PARAM3, vote.getVoteCount());
         fragment.setArguments(args);
         return fragment;
     }
@@ -59,8 +61,8 @@ public class VoteResultFragment extends Fragment {
         super.onCreate(savedInstanceState);
         if (getArguments() != null) {
             restaurantName = getArguments().getString(ARG_PARAM1);
-            restaurantId = getArguments().getString(ARG_PARAM2);
-            voteCount = getArguments().getString(ARG_PARAM3);
+            restaurantId = getArguments().getInt(ARG_PARAM2);
+            voteCount = getArguments().getInt(ARG_PARAM3);
         }
     }
 
@@ -76,7 +78,6 @@ public class VoteResultFragment extends Fragment {
 
         TextView voteCountTextView= (TextView) rootView.findViewById(R.id.voteCount);
         voteCountTextView.setText("Vote count: " + voteCount);
-
         return rootView;
     }
 

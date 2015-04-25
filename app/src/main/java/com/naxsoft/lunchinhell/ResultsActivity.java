@@ -11,8 +11,16 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.Toast;
 
+import com.naxsoft.lunchinhell.data.VoteDS;
+import com.naxsoft.lunchinhell.domain.Restaurant;
+import com.naxsoft.lunchinhell.domain.Vote;
+
+import java.util.SortedSet;
+
 
 public class ResultsActivity extends Activity implements NavigationFragment.OnFragmentInteractionListener, VoteResultFragment.OnFragmentInteractionListener {
+
+    VoteDS voteDS = new VoteDS();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -21,9 +29,12 @@ public class ResultsActivity extends Activity implements NavigationFragment.OnFr
 
         FragmentManager fragmentManager = getFragmentManager();
         FragmentTransaction transaction = fragmentManager.beginTransaction();
-        for (int i = 2 ; i > 0; i--) {
-            transaction.add(R.id.resultList, VoteResultFragment.newInstance("Test " + 1, "" + i, "" + i), "" + i);
+        SortedSet<Vote> votes = voteDS.getVotes();
+
+        for (Vote v : votes) {
+            transaction.add(R.id.resultList, VoteResultFragment.newInstance(v));
         }
+
         transaction.commit();
 
     }
