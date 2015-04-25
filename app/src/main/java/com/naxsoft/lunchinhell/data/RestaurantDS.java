@@ -3,6 +3,7 @@ package com.naxsoft.lunchinhell.data;
 import com.naxsoft.lunchinhell.domain.Restaurant;
 import com.naxsoft.lunchinhell.domain.VoteState;
 
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashSet;
 import java.util.Random;
@@ -18,11 +19,11 @@ public class RestaurantDS {
 
 
 
-    public Collection<Restaurant> getRestaurants() {
-        Collection<Restaurant> result = new HashSet<>();
+    public ArrayList<Restaurant> getRestaurants() {
+        ArrayList<Restaurant> result = new ArrayList<>();
         for (int i = 0; i < rand.nextInt((randMax - randMin) + 1) + randMin; i++) {
             boolean vote = rand.nextBoolean();
-            result.add(new Restaurant("Name " + i, i, new VoteState(vote, !vote)));
+            result.add(new Restaurant("Name " + i, i, i, new VoteState(vote, !vote)));
         }
         return result;
     }

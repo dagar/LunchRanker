@@ -1,23 +1,32 @@
 package com.naxsoft.lunchinhell.domain;
 
+import android.os.Parcel;
+import android.os.Parcelable;
+
 /**
  * Created by Iouri on 24/04/2015.
  */
-public class Vote implements Comparable<Vote> {
-    Restaurant restaurant;
+public class Vote implements Comparable<Vote>, Parcelable {
+    public static final Parcelable.Creator CREATOR = new Parcelable.Creator() {
+        public Vote createFromParcel(Parcel in) {
+            return new Vote(in);
+        }
+
+        public Vote[] newArray(int size) {
+            return new Vote[size];
+        }
+    };
+    int restaurantId;
     int voteCount;
 
-    public Vote(Restaurant restaurant, int voteCount) {
-        this.restaurant = restaurant;
+    public Vote(int restaurantId, int voteCount) {
+        this.restaurantId = restaurantId;
         this.voteCount = voteCount;
     }
 
-    public Restaurant getRestaurant() {
-        return restaurant;
-    }
-
-    public int getVoteCount() {
-        return voteCount;
+    public Vote(Parcel in) {
+        this.restaurantId = in.readInt();
+        this.voteCount = in.readInt();
     }
 
     @Override
@@ -29,5 +38,16 @@ public class Vote implements Comparable<Vote> {
         } else {
             return  0;
         }
+    }
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeInt(this.restaurantId);
+        dest.writeInt(this.voteCount);
     }
 }

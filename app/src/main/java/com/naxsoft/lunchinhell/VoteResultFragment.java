@@ -11,6 +11,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.naxsoft.lunchinhell.data.VoteDS;
+import com.naxsoft.lunchinhell.domain.Restaurant;
 import com.naxsoft.lunchinhell.domain.Vote;
 
 
@@ -38,16 +39,16 @@ public class VoteResultFragment extends Fragment {
      * Use this factory method to create a new instance of
      * this fragment using the provided parameters.
      *
-     * @param vote Parameter 1.
+     * @param restaurant Parameter 1.
      * @return A new instance of fragment VoteResultFragment.
      */
     // TODO: Rename and change types and number of parameters
-    public static VoteResultFragment newInstance(Vote vote) {
+    public static VoteResultFragment newInstance(Restaurant restaurant) {
         VoteResultFragment fragment = new VoteResultFragment();
         Bundle args = new Bundle();
-        args.putString(ARG_PARAM1, vote.getRestaurant().getName());
-        args.putInt(ARG_PARAM2, vote.getRestaurant().getId());
-        args.putInt(ARG_PARAM3, vote.getVoteCount());
+        args.putString(ARG_PARAM1, restaurant.getName());
+        args.putInt(ARG_PARAM2, restaurant.getId());
+        args.putInt(ARG_PARAM3, restaurant.getVoteCount());
         fragment.setArguments(args);
         return fragment;
     }
