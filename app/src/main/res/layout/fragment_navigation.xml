@@ -1,0 +1,46 @@
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools" android:layout_width="match_parent"
+    android:layout_height="match_parent" tools:context="com.naxsoft.lunchinhell.NavigationFragment">
+
+    <!-- TODO: Update blank fragment layout -->
+
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:background="#ffdddddd" >
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/navigationHome"
+            android:maxHeight="100dp"
+            android:maxWidth="100dp"
+            android:src="@drawable/home"
+            android:adjustViewBounds="true"
+            android:layout_weight="1"
+            android:padding="10dp" />
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/navigationResults"
+            android:maxHeight="100dp"
+            android:maxWidth="100dp"
+            android:src="@drawable/poll"
+            android:adjustViewBounds="true"
+            android:layout_weight="1"
+            android:padding="10dp" />
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/navigationEdit"
+            android:maxHeight="100dp"
+            android:maxWidth="100dp"
+            android:src="@drawable/add"
+            android:adjustViewBounds="true"
+            android:layout_weight="1"
+            android:padding="10dp" />
+    </LinearLayout>
+</FrameLayout>
