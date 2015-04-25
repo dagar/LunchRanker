@@ -1,13 +1,20 @@
 package com.naxsoft.lunchinhell;
 
 import android.app.Activity;
+import android.graphics.Color;
+import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.Bundle;
 import android.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
+
+import com.naxsoft.lunchinhell.data.VoteDS;
+import com.naxsoft.lunchinhell.domain.Restaurant;
 
 
 /**
@@ -23,11 +30,17 @@ public class VoteItemFragment extends Fragment {
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "restaurantName";
     private static final String ARG_PARAM2 = "restaurantId";
+    private static final String ARG_PARAM3 = "voteUp";
+    private static final String ARG_PARAM4 = "voteDown";
 
+    VoteDS voteDS = new VoteDS();
 
     // TODO: Rename and change types of parameters
     private String restaurantName;
-    private String restaurantId;
+    private int restaurantId;
+
+    private boolean voteUpValue;
+    private boolean voteDownValue;
 
     private OnFragmentInteractionListener mListener;
 
@@ -35,16 +48,18 @@ public class VoteItemFragment extends Fragment {
      * Use this factory method to create a new instance of
      * this fragment using the provided parameters.
      *
-     * @param restaurantName Parameter 1.
-     * @param restaurantId Parameter 2.
+     * @param restaurant Parameter 1.
      * @return A new instance of fragment VoteItemFragment.
      */
     // TODO: Rename and change types and number of parameters
-    public static VoteItemFragment newInstance(String restaurantName, String restaurantId) {
+    public static VoteItemFragment newInstance(Restaurant restaurant) {
         VoteItemFragment fragment = new VoteItemFragment();
         Bundle args = new Bundle();
-        args.putString(ARG_PARAM1, restaurantName);
-        args.putString(ARG_PARAM2, restaurantId);
+        args.putString(ARG_PARAM1, restaurant.getName());
+        args.putInt(ARG_PARAM2, restaurant.getId());
+        args.putBoolean(ARG_PARAM3, restaurant.getVoteType().isVoteUp());
+        args.putBoolean(ARG_PARAM4, restaurant.getVoteType().isVoteDown());
+
         fragment.setArguments(args);
         return fragment;
     }
@@ -58,7 +73,9 @@ public class VoteItemFragment extends Fragment {
         super.onCreate(savedInstanceState);
         if (getArguments() != null) {
             restaurantName = getArguments().getString(ARG_PARAM1);
-            restaurantId = getArguments().getString(ARG_PARAM2);
+            restaurantId = getArguments().getInt(ARG_PARAM2);
+            voteUpValue = getArguments().getBoolean(ARG_PARAM3);
+            voteDownValue = getArguments().getBoolean(ARG_PARAM4);
         }
     }
 
@@ -68,6 +85,54 @@ public class VoteItemFragment extends Fragment {
         View rootView = inflater.inflate(R.layout.fragment_vote_item, container, false);
         TextView restaurantTextView= (TextView) rootView.findViewById(R.id.restaurantName);
         restaurantTextView.setText(restaurantName);
+
+        final ImageView voteUpImageView = (ImageView) rootView.findViewById(R.id.voteUp);
+        final ImageView voteDownImageView = (ImageView) rootView.findViewById(R.id.voteDown);
+
+        if (voteUpValue)   {
+            voteUpImageView.setBackgroundColor(Color.RED);
+            voteUpImageView.setEnabled(false);
+        }
+        if (voteDownValue) {
+            voteDownImageView.setBackgroundColor(Color.RED);
+            voteDownImageView.setEnabled(false);
+        }
+
+        voteUpImageView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                voteUpImageView.setEnabled(false);
+                voteUpImageView.setBackgroundColor(Color.RED);
+                voteUpValue = true;
+
+                voteDownImageView.setEnabled(true);
+                voteDownImageView.setBackgroundColor(Color.WHITE);
+                voteDownValue = false;
+
+
+                Toast.makeText(v.getContext(), "Sending voteUp for " + restaurantName + " id " + restaurantId, Toast.LENGTH_SHORT).show();
+                voteDS.submitVote(restaurantId, 1);
+            }
+        });
+
+        voteDownImageView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                voteDownImageView.setEnabled(false);
+                voteDownImageView.setBackgroundColor(Color.RED);
+                voteDownValue = true;
+
+                voteUpImageView.setEnabled(true);
+                voteUpImageView.setBackgroundColor(Color.WHITE);
+                voteUpValue = false;
+
+                Toast.makeText(v.getContext(), "Sending voteDown for " + restaurantName + " id " + restaurantId, Toast.LENGTH_SHORT).show();
+                voteDS.submitVote(restaurantId, -1);
+
+            }
+        });
+
+
         return rootView;
     }
 
