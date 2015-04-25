@@ -1,13 +1,3 @@
-<<<<<<< HEAD
-<resources>
-
-    <!-- Base application theme. -->
-    <style name="AppTheme" parent="Theme.AppCompat.Light.DarkActionBar">
-        <!-- Customize your theme here. -->
-    </style>
-
-</resources>
-=======
 <resources>
 
     <!-- Base application theme. -->
@@ -16,4 +6,3 @@
     </style>
 
 </resources>
->>>>>>> 4024e19... Initial commit. Added Login, Voting and Result views and fragments
