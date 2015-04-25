@@ -3,40 +3,67 @@ package com.naxsoft.lunchinhell;
 import android.app.Activity;
 import android.app.FragmentManager;
 import android.app.FragmentTransaction;
+import android.content.BroadcastReceiver;
+import android.content.Context;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.net.Uri;
 import android.os.Bundle;
+import android.support.v4.content.LocalBroadcastManager;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.Toast;
 
+import com.naxsoft.lunchinhell.data.RestaurantDS;
 import com.naxsoft.lunchinhell.data.VoteDS;
 import com.naxsoft.lunchinhell.domain.Restaurant;
 import com.naxsoft.lunchinhell.domain.Vote;
+import com.naxsoft.lunchinhell.service.RESTService;
+import com.naxsoft.lunchinhell.service.WebHelper;
 
+import java.util.ArrayList;
 import java.util.SortedSet;
+import java.util.TreeSet;
 
 
 public class ResultsActivity extends Activity implements NavigationFragment.OnFragmentInteractionListener, VoteResultFragment.OnFragmentInteractionListener {
 
-    VoteDS voteDS = new VoteDS();
+    /**
+     * The listener that responds to intents sent back from the service
+     */
+    private BroadcastReceiver onNotice = new BroadcastReceiver() {
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            ArrayList<Restaurant> restaurants = intent.getParcelableArrayListExtra("restaurants");
+            renderResults(new TreeSet<>(restaurants));
+        }
+    };
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_results);
+        tryRenderResults();
+    }
 
+    private void tryRenderResults() {
+        if(!WebHelper.isOnline(this)) {
+            Toast.makeText(this, "No Network Connectivity.", Toast.LENGTH_LONG).show();
+        } else {
+            Intent intent = new Intent(ResultsActivity.this, RESTService.class);
+            intent.setAction(RESTService.LIST_VOTES);
+            startService(intent);
+        }
+    }
+
+    private void renderResults(TreeSet<Restaurant> restaurants) {
         FragmentManager fragmentManager = getFragmentManager();
         FragmentTransaction transaction = fragmentManager.beginTransaction();
-        SortedSet<Vote> votes = voteDS.getVotes();
-
-        for (Vote v : votes) {
-            transaction.add(R.id.resultList, VoteResultFragment.newInstance(v));
+        for (Restaurant r : restaurants) {
+            transaction.add(R.id.resultList, VoteResultFragment.newInstance(r));
         }
-
         transaction.commit();
-
     }
 
 
@@ -66,15 +93,15 @@ public class ResultsActivity extends Activity implements NavigationFragment.OnFr
     protected void onResume() {
         super.onResume();
         Log.d("test", "value");
+        IntentFilter filter = new IntentFilter(RESTService.REFRESH_RESTAURANTS);
+        LocalBroadcastManager.getInstance(this).registerReceiver(onNotice, filter);
+
     }
 
     @Override
     protected void onPause() {
         super.onPause();
-    }
-
-    public void showActivity(Class activityClass) {
-        startActivity(new Intent(this, activityClass));
+        LocalBroadcastManager.getInstance(this).unregisterReceiver(onNotice);
     }
 
     public void showHome() {

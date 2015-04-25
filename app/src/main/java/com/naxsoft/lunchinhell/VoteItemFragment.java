@@ -1,6 +1,7 @@
 package com.naxsoft.lunchinhell;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.Drawable;
 import android.net.Uri;
@@ -15,6 +16,9 @@ import android.widget.Toast;
 
 import com.naxsoft.lunchinhell.data.VoteDS;
 import com.naxsoft.lunchinhell.domain.Restaurant;
+import com.naxsoft.lunchinhell.domain.Vote;
+import com.naxsoft.lunchinhell.service.RESTService;
+import com.naxsoft.lunchinhell.service.WebHelper;
 
 
 /**
@@ -101,35 +105,51 @@ public class VoteItemFragment extends Fragment {
         voteUpImageView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                voteUpImageView.setEnabled(false);
-                voteUpImageView.setBackgroundColor(Color.RED);
-                voteUpValue = true;
+                if(WebHelper.isOnline(v.getContext())) {
+                    voteUpImageView.setEnabled(false);
+                    voteUpImageView.setBackgroundColor(Color.RED);
+                    voteUpValue = true;
 
-                voteDownImageView.setEnabled(true);
-                voteDownImageView.setBackgroundColor(Color.WHITE);
-                voteDownValue = false;
+                    voteDownImageView.setEnabled(true);
+                    voteDownImageView.setBackgroundColor(Color.WHITE);
+                    voteDownValue = false;
 
 
-                Toast.makeText(v.getContext(), "Sending voteUp for " + restaurantName + " id " + restaurantId, Toast.LENGTH_SHORT).show();
-                voteDS.submitVote(restaurantId, 1);
+                    Toast.makeText(v.getContext(), "Sending voteUp for " + restaurantName + " id " + restaurantId, Toast.LENGTH_SHORT).show();
+
+                    Intent intent = new Intent(v.getContext(), RESTService.class);
+                    intent.setAction(RESTService.SAVE_VOTE);
+                    intent.putExtra("vote", new Vote(restaurantId, 1));
+                    v.getContext().startService(intent);
+                } else {
+                    Toast.makeText(v.getContext(), "No Network Connectivity.", Toast.LENGTH_LONG).show();
+                }
             }
         });
 
         voteDownImageView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                voteDownImageView.setEnabled(false);
-                voteDownImageView.setBackgroundColor(Color.RED);
-                voteDownValue = true;
+                if(WebHelper.isOnline(v.getContext())) {
+                    voteDownImageView.setEnabled(false);
+                    voteDownImageView.setBackgroundColor(Color.RED);
+                    voteDownValue = true;
 
-                voteUpImageView.setEnabled(true);
-                voteUpImageView.setBackgroundColor(Color.WHITE);
-                voteUpValue = false;
+                    voteUpImageView.setEnabled(true);
+                    voteUpImageView.setBackgroundColor(Color.WHITE);
+                    voteUpValue = false;
 
-                Toast.makeText(v.getContext(), "Sending voteDown for " + restaurantName + " id " + restaurantId, Toast.LENGTH_SHORT).show();
-                voteDS.submitVote(restaurantId, -1);
+                    Toast.makeText(v.getContext(), "Sending voteDown for " + restaurantName + " id " + restaurantId, Toast.LENGTH_SHORT).show();
+                    // voteDS.submitVote(new Vote(restaurantId, -1));
 
-            }
+                    Intent intent = new Intent(v.getContext(), RESTService.class);
+                    intent.setAction(RESTService.SAVE_VOTE);
+                    intent.putExtra("vote", new Vote(restaurantId, -1));
+                    v.getContext().startService(intent);
+                } else {
+                    Toast.makeText(v.getContext(), "No Network Connectivity.", Toast.LENGTH_LONG).show();
+                }
+        }
         });
 
 
