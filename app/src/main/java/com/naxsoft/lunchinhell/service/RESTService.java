@@ -20,6 +20,7 @@ public class RESTService extends IntentService {
     public static final String SAVE_VOTE = "SAVE-VOTE";
     public static final String LIST_VOTES = "LIST_VOTES";
     public static final String REFRESH_RESTAURANTS = "REFRESH-RESTAURANTS";
+    public static final String REFRESH_VOTES = "REFRESH-VOTES";
 
     RestaurantDS restaurantDS = new RestaurantDS();
     VoteDS voteDS = new VoteDS();
@@ -36,8 +37,10 @@ public class RESTService extends IntentService {
     @Override
     protected void onHandleIntent(Intent intent) {
         String action = intent.getAction();
-        if (LIST_RESTAURANTS.equals(action) || LIST_VOTES.equals(action)) {
+        if (LIST_RESTAURANTS.equals(action)) {
             refreshRestaurants();
+        } else if (LIST_VOTES.equals(action)) {
+            refreshVotes();
         } else if (SAVE_VOTE.equals(action)) {
             Vote vote = intent.getParcelableExtra("vote");
             voteDS.submitVote(vote);
@@ -45,9 +48,15 @@ public class RESTService extends IntentService {
         }
     }
 
+    private void refreshVotes() {
+        ArrayList<Restaurant> restaurants = voteDS.getVotes();
+        Intent targetIntent = new Intent(REFRESH_VOTES);
+        targetIntent.putParcelableArrayListExtra("restaurants", restaurants);
+        LocalBroadcastManager.getInstance(this).sendBroadcast(targetIntent);
+    }
+
     private void refreshRestaurants() {
         ArrayList<Restaurant> restaurants = restaurantDS.getRestaurants();
-
         Intent targetIntent = new Intent(REFRESH_RESTAURANTS);
         targetIntent.putParcelableArrayListExtra("restaurants", restaurants);
         LocalBroadcastManager.getInstance(this).sendBroadcast(targetIntent);

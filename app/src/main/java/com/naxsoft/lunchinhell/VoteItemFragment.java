@@ -144,7 +144,7 @@ public class VoteItemFragment extends Fragment {
 
                     Intent intent = new Intent(v.getContext(), RESTService.class);
                     intent.setAction(RESTService.SAVE_VOTE);
-                    intent.putExtra("vote", new Vote(restaurantId, -1));
+                    intent.putExtra("vote", new Vote(restaurantId, 0));
                     v.getContext().startService(intent);
                 } else {
                     Toast.makeText(v.getContext(), "No Network Connectivity.", Toast.LENGTH_LONG).show();

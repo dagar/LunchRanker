@@ -32,7 +32,7 @@ public class WebHelper {
             if (input !=null && !input.isEmpty()) {
                 //Create HTTP Headers for the content length and type
                 conn.setFixedLengthStreamingMode(input.getBytes().length);
-                conn.setRequestProperty("Content-Type", "application/json");
+                //conn.setRequestProperty("Content-Type", "application/json");
                 //Place the input data into the connection
                 conn.setDoOutput(true);
                 os = new BufferedOutputStream(conn.getOutputStream());

@@ -29,6 +29,14 @@ public class Vote implements Comparable<Vote>, Parcelable {
         this.voteCount = in.readInt();
     }
 
+    public int getRestaurantId() {
+        return restaurantId;
+    }
+
+    public int getVoteCount() {
+        return voteCount;
+    }
+
     @Override
     public int compareTo(Vote another) {
         if (voteCount < another.voteCount) {
