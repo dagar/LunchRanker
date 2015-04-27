@@ -13,7 +13,7 @@
             tools:layout="@layout/fragment_header"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
-            android:name="com.naxsoft.lunchinhell.HeaderFragment"
+            android:name="ca.dagar.lunchranker.HeaderFragment"
             android:id="@+id/fragment2" />
 
         <ScrollView
@@ -37,7 +37,7 @@
         <fragment
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
-            android:name="com.naxsoft.lunchinhell.NavigationFragment"
+            android:name="ca.dagar.lunchranker.NavigationFragment"
             android:id="@+id/fragment4"
             tools:layout="@layout/fragment_navigation" />
 
