@@ -9,6 +9,7 @@ import android.content.SharedPreferences;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.provider.Settings;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -43,9 +44,11 @@ public class LoginActivity extends Activity implements NavigationFragment.OnFrag
 
         final EditText userName = (EditText) findViewById(R.id.userName);
         final EditText password = (EditText) findViewById(R.id.password);
+        final String android_id = Settings.Secure.getString(getContentResolver(), Settings.Secure.ANDROID_ID);
 
         userName.setText(settings.getString(PREF_USER_NAME, ""));
         password.setText(settings.getString(PREF_USER_PASSWORD, ""));
+//        password.setText(android_id);
 
         login.setOnClickListener(new View.OnClickListener() {
             @Override

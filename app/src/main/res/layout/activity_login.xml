@@ -38,15 +38,16 @@
                     android:ems="10"
                     android:id="@+id/userName"
                     android:layout_weight="1"
-                    android:hint="Login" />
+                    android:hint="Group name" />
 
                 <EditText
                     android:layout_width="fill_parent"
                     android:layout_height="wrap_content"
-                    android:inputType="textPassword"
                     android:ems="10"
                     android:id="@+id/password"
-                    android:hint="Password" />
+                    android:hint="Device ID"
+                    android:inputType="text"
+                    android:enabled="false" />
             </LinearLayout>
 
             <LinearLayout
