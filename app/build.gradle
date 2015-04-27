@@ -1,27 +1,75 @@
 apply plugin: 'com.android.application'
+apply plugin: 'play'
 
 android {
-    compileSdkVersion 22
-    buildToolsVersion "22.0.1"
+    compileSdkVersion 21
+    buildToolsVersion "21.1.2"
 
     defaultConfig {
-        applicationId "com.naxsoft.lunchinhell"
-        minSdkVersion 19
-        targetSdkVersion 22
-        versionCode 1
-        versionName "1.0"
+        applicationId "ca.dagar.lunchranker"
+        minSdkVersion 16
+        targetSdkVersion 21
+
+        // Fetch the version according to git latest tag and "how far are we from last tag"
+        def longVersionName = "git -C ${rootDir} describe --tags --long".execute().text.trim()
+        printf("\nlongVersionName " + longVersionName)
+
+        def (fullVersionTag, versionBuild, gitSha) = longVersionName.tokenize('-')
+        printf("\nfullVersionTag " + fullVersionTag)
+        printf("\nversionBuild " + versionBuild)
+        printf("\ngitSha " + gitSha)
+
+        def (fullVersionTagInteger) = fullVersionTag.tokenize('v')
+        def (versionMajor, versionMinor, versionPatch) = fullVersionTagInteger.tokenize('.')
+
+        printf("\nversionMajor " + versionMajor)
+        printf("\nversionMinor " + versionMinor)
+        printf("\nversionPatch " + versionPatch)
+
+        // Set the version name
+        versionName "$versionMajor.$versionMinor.$versionPatch($versionBuild)"
+
+        // Turn the version name into a version code
+        versionCode versionMajor.toInteger() * 100000 +
+                versionMinor.toInteger() * 10000 +
+                versionPatch.toInteger() * 1000 +
+                versionBuild.toInteger()
+
+        // Friendly print the version output to the Gradle console
+        printf("\n--------" + "VERSION DATA--------" + "\n" + "- CODE: " + versionCode + "\n" +
+                "- NAME: " + versionName + "\n----------------------------\n")
+    }
+    signingConfigs {
+        release {
+            storeFile file(System.getenv("ANDROIDAPP_KEYSTORE_PATH"))
+            storePassword System.getenv("ANDROIDAPP_KEYSTORE_PASSWORD")
+            keyAlias System.getenv("ANDROIDAPP_KEY_ALIAS")
+            keyPassword System.getenv("ANDROIDAPP_KEY_PASSWORD")
+        }
     }
     buildTypes {
         release {
+            signingConfig signingConfigs.release
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
+    }
+    play {
+        serviceAccountEmail = '868554619222-3qv79chn8jevepg0lerp65i56ep3vhah@developer.gserviceaccount.com'
+        pk12File = file(System.getenv("ANDROIDAPP_GOOGLE_PLAY_SERVICE_KEY"))
+        track = 'beta' // 'production' or 'beta' or 'alpha'
+        uploadImages = true
+    }
+    lintOptions {
+        abortOnError true
+        ignoreWarnings false
+        quiet false
     }
 }
 
 dependencies {
     compile fileTree(dir: 'libs', include: ['*.jar'])
-    compile 'com.android.support:appcompat-v7:22.1.0'
-    compile 'com.google.android.gms:play-services:7.0.0'
+    compile 'com.android.support:appcompat-v7:22.0.0'
+    compile 'com.google.android.gms:play-services:6.5.87'
     compile 'com.google.code.gson:gson:2.3.1'
 }
