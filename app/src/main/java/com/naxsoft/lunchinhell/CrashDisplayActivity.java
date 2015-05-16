@@ -34,11 +34,13 @@ public class CrashDisplayActivity extends Activity {
 
         TextView text = (TextView) findViewById(R.id.text);
         String exName = exception.getClass().getSimpleName();
-        String causeName = cause.getClass().getSimpleName();
+        // String causeName = cause.getClass().getSimpleName();
+        String causeName = cause.getMessage();
+
         CharSequence boldExName = createSpanned(exName, new StyleSpan(Typeface.BOLD));
         CharSequence boldCauseName = createSpanned(causeName, new StyleSpan(Typeface.BOLD));
         CharSequence crashTemplate;
-        if (exception == cause) {
+        if (null == causeName || causeName.isEmpty()) {
             crashTemplate = getText(R.string.msgCrash);
         } else {
             crashTemplate = getText(R.string.msgCrashCause);

@@ -9,8 +9,8 @@
     <string name="title_activity_crash_display">CrashDisplayActivity</string>
 
 
-    <string name="msgCrash">Exception <b>\"%1$s\"</b> has been successfully caught!\n</string>
-    <string name="msgCrashCause">Exception <b>\"%1$s\"</b> (caused by <b>\"%2$s\"</b>) has been successfully caught!\n</string>
+    <string name="msgCrash">Exception <b>\"%1$s\"</b> has been caught!\n</string>
+    <string name="msgCrashCause">Exception <b>\"%1$s\"</b> (caused by <b>\"%2$s\"</b>) has been caught!\n</string>
 
     <string-array name="msgMem">
         <item>All your base are belong to us</item>
@@ -30,5 +30,6 @@
     <string name="txtSendReportHint">Press <b>\"Report It!\"</b> to see the stuff</string>
     <string name="txtCrashTitle">Crash Caught</string>
     <string name="btnIgnore">Ignore</string>
+    <string name="editRestaurant">Edit</string>
 
 </resources>

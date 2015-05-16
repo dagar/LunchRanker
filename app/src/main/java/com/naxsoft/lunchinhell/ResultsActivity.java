@@ -27,7 +27,7 @@ import java.util.SortedSet;
 import java.util.TreeSet;
 
 
-public class ResultsActivity extends Activity implements NavigationFragment.OnFragmentInteractionListener, VoteResultFragment.OnFragmentInteractionListener {
+public class ResultsActivity extends Activity implements VoteResultFragment.OnFragmentInteractionListener {
 
     /**
      * The listener that responds to intents sent back from the service

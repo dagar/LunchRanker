@@ -2,13 +2,20 @@ package com.naxsoft.lunchinhell;
 
 import android.app.Activity;
 import android.app.AlertDialog;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.Toast;
+
+import com.naxsoft.lunchinhell.asyncTasks.GetPlacesTask;
+import com.naxsoft.lunchinhell.domain.Restaurant;
+
+import java.util.List;
 
 
 public class EditActivity extends Activity {
@@ -17,6 +24,8 @@ public class EditActivity extends Activity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_results);
+
+        GetPlacesTask placesTask = new GetPlacesTask();
     }
 
 

@@ -39,19 +39,27 @@ public class WebHelper {
                 os.write(input.getBytes());
                 //clean up
                 os.flush();
+            } else {
+
             }
 
-            final InputStream inputFromServer = conn.getInputStream();
-
-            in = new BufferedReader(new InputStreamReader(inputFromServer));
-            String inputLine;
-            StringBuffer json = new StringBuffer();
-
-            while ((inputLine = in.readLine()) != null) {
-                json.append(inputLine);
+            final InputStream inputFromServer;
+            if (method.equals("POST")) {
+                inputFromServer = conn.getErrorStream();
+            } else {
+                inputFromServer = conn.getInputStream();
             }
 
-            return new WebResult(conn.getResponseCode(), json.toString());
+
+            StringBuffer serverResponse = new StringBuffer();
+            if (null != inputFromServer) {
+                in = new BufferedReader(new InputStreamReader(inputFromServer));
+                String inputLine;
+                while ((inputLine = in.readLine()) != null) {
+                    serverResponse.append(inputLine);
+                }
+            }
+            return new WebResult(conn.getResponseCode(), serverResponse.toString());
         } catch (Exception ex) {
             Log.d("network", "HTTP error", ex);
             return new WebResult(500, "");

@@ -6,7 +6,6 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.provider.Settings;
@@ -15,17 +14,18 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.ImageView;
 import android.widget.Toast;
 
-import com.naxsoft.lunchinhell.data.AccountDS;
+import com.naxsoft.lunchinhell.asyncTasks.AsyncTaskResult;
+import com.naxsoft.lunchinhell.asyncTasks.LoginTask;
+import com.naxsoft.lunchinhell.asyncTasks.RegisterTask;
 import com.naxsoft.lunchinhell.domain.UserAccount;
 import com.naxsoft.lunchinhell.service.WebHelper;
 
+import com.naxsoft.lunchinhell.asyncTasks.BoolResult;
 
-public class LoginActivity extends Activity implements NavigationFragment.OnFragmentInteractionListener
+public class LoginActivity extends Activity
 {
-
     public static final String PREF_USER_NAME = "PREF_USER_NAME";
     public static final String PREF_USER_PASSWORD = "PREF_USER_PASSWORD";
 
@@ -47,8 +47,8 @@ public class LoginActivity extends Activity implements NavigationFragment.OnFrag
         final String android_id = Settings.Secure.getString(getContentResolver(), Settings.Secure.ANDROID_ID);
 
         userName.setText(settings.getString(PREF_USER_NAME, ""));
-        password.setText(settings.getString(PREF_USER_PASSWORD, ""));
-//        password.setText(android_id);
+//        password.setText(settings.getString(PREF_USER_PASSWORD, ""));
+        password.setText(android_id);
 
         login.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -59,22 +59,7 @@ public class LoginActivity extends Activity implements NavigationFragment.OnFrag
                 }
 
                 UserAccount account = new UserAccount(userName.getText().toString(), password.getText().toString());
-                Boolean result = new LoginTask().doInBackground(account);
-                if (result.booleanValue()) {
-                    context.startActivity(new Intent(context, VotingActivity.class));
-                } else {
-                    new AlertDialog.Builder(context).setTitle("Authentication failed")
-                            .setMessage("Are you registered on online?")
-                            .setPositiveButton("OK",
-                                    new DialogInterface.OnClickListener() {
-                                        public void onClick(DialogInterface dialog, int whichButton) {
-                                            // TODO
-                                            dialog.dismiss();
-                                        }
-                                    })
-                            .create()
-                            .show();
-                }
+                new LoginTask(new LoginCallback(LoginActivity.this)).execute(account);
             }
         });
         register.setOnClickListener(new View.OnClickListener() {
@@ -88,37 +73,8 @@ public class LoginActivity extends Activity implements NavigationFragment.OnFrag
                 EditText login = (EditText) findViewById(R.id.userName);
                 EditText password = (EditText) findViewById(R.id.password);
                 UserAccount account = new UserAccount(login.getText().toString(), password.getText().toString());
-                Boolean result = new RegisterTask().doInBackground(account);
-                if (result.booleanValue()) {
-                    SharedPreferences.Editor editor = settings.edit();
-                    editor.putString(PREF_USER_NAME, account.getUserName());
-                    editor.putString(PREF_USER_PASSWORD, account.getPassword());
-                    editor.commit();
+                new RegisterTask(new RegisterCallback(LoginActivity.this)).execute(account);
 
-                    new AlertDialog.Builder(context).setTitle("Authentication succeeded")
-                            .setMessage("Now you can login")
-                            .setPositiveButton("OK",
-                                    new DialogInterface.OnClickListener() {
-                                        public void onClick(DialogInterface dialog, int whichButton) {
-                                            // TODO
-                                            dialog.dismiss();
-                                        }
-                                    })
-                            .create()
-                            .show();
-                } else {
-                    new AlertDialog.Builder(context).setTitle("Registration failed")
-                            .setMessage("Try different username")
-                            .setPositiveButton("OK",
-                                    new DialogInterface.OnClickListener() {
-                                        public void onClick(DialogInterface dialog, int whichButton) {
-                                            // TODO
-                                            dialog.dismiss();
-                                        }
-                                    })
-                            .create()
-                            .show();
-                }
             }
         });
     }
@@ -145,35 +101,5 @@ public class LoginActivity extends Activity implements NavigationFragment.OnFrag
 
         return super.onOptionsItemSelected(item);
     }
-
-    @Override
-    public void onFragmentInteraction(Uri uri) {
-        Toast.makeText(this, "onFragmentInteraction " + uri, Toast.LENGTH_LONG).show();
-    }
 }
 
-class LoginTask extends AsyncTask<UserAccount, Integer, Boolean> {
-    @Override
-    protected Boolean doInBackground(UserAccount... params) {
-        UserAccount account = params[0];
-        AccountDS accountDS = new AccountDS();
-        if(accountDS.login(account)) {
-            return Boolean.TRUE;
-        } else {
-            return Boolean.FALSE;
-        }
-    }
-}
-
-class RegisterTask extends AsyncTask<UserAccount, Integer, Boolean> {
-    @Override
-    protected Boolean doInBackground(UserAccount... params) {
-        UserAccount account = params[0];
-        AccountDS accountDS = new AccountDS();
-        if(accountDS.register(account)) {
-            return Boolean.TRUE;
-        } else {
-            return Boolean.FALSE;
-        }
-    }
-}

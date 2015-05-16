@@ -26,7 +26,7 @@ import java.util.Collection;
 import java.util.TreeSet;
 
 
-public class VotingActivity extends Activity implements VoteItemFragment.OnFragmentInteractionListener, NavigationFragment.OnFragmentInteractionListener {
+public class VotingActivity extends Activity implements VoteItemFragment.OnFragmentInteractionListener  {
 
     /**
      * The listener that responds to intents sent back from the service

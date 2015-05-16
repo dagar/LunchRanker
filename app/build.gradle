@@ -17,6 +17,9 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
     }
+    packagingOptions {
+        exclude 'LICENSE.txt'
+    }
 }
 
 dependencies {
@@ -24,4 +27,5 @@ dependencies {
     compile 'com.android.support:appcompat-v7:22.1.+'
     compile 'com.google.android.gms:play-services:7.+'
     compile 'com.google.code.gson:gson:2.+'
+    compile 'se.walkercrou:google-places-api-java:2.+'
 }

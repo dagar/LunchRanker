@@ -51,9 +51,7 @@ public class MyApplication extends Application {
      * This handler catches exceptions in the background threads and propagates them to the UI thread
      */
     static class UncaughtHandler implements Thread.UncaughtExceptionHandler {
-
         private final Handler mHandler;
-
         UncaughtHandler(Handler handler) {
             mHandler = handler;
         }
@@ -74,13 +72,12 @@ public class MyApplication extends Application {
      * Wrapper class for exceptions caught in the background
      */
     static class BackgroundException extends RuntimeException {
-
         final long tid;
         final String threadName;
 
         /**
-         * @param e original exception
-         * @param tid id of the thread where exception occurred
+         * @param e          original exception
+         * @param tid        id of the thread where exception occurred
          * @param threadName name of the thread where exception occurred
          */
         BackgroundException(Throwable e, long tid, String threadName) {
