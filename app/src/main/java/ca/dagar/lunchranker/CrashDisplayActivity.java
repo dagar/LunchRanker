@@ -19,7 +19,7 @@ public class CrashDisplayActivity extends Activity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         requestWindowFeature(Window.FEATURE_NO_TITLE);
-        setContentView(ca.dagar.lunchranker.R.layout.activity_crash_display);
+        setContentView(R.layout.activity_crash_display);
 
         Throwable exception = (Throwable) getIntent().getSerializableExtra("e");
         Throwable cause = findCause(exception);
@@ -32,7 +32,7 @@ public class CrashDisplayActivity extends Activity {
 //    String exClassName = crashInfo.exceptionClassName;
 //    String exStackTrace = crashInfo.stackTrace;
 
-        TextView text = (TextView) findViewById(ca.dagar.lunchranker.R.id.text);
+        TextView text = (TextView) findViewById(R.id.text);
         String exName = exception.getClass().getSimpleName();
         // String causeName = cause.getClass().getSimpleName();
         String causeName = cause.getMessage();
@@ -41,9 +41,9 @@ public class CrashDisplayActivity extends Activity {
         CharSequence boldCauseName = createSpanned(causeName, new StyleSpan(Typeface.BOLD));
         CharSequence crashTemplate;
         if (null == causeName || causeName.isEmpty()) {
-            crashTemplate = getText(ca.dagar.lunchranker.R.string.msgCrash);
+            crashTemplate = getText(R.string.msgCrash);
         } else {
-            crashTemplate = getText(ca.dagar.lunchranker.R.string.msgCrashCause);
+            crashTemplate = getText(R.string.msgCrashCause);
         }
         CharSequence crashMessage = TextUtils.replace(crashTemplate,
                 new String[] { "%1$s", "%2$s" },
@@ -86,8 +86,8 @@ public class CrashDisplayActivity extends Activity {
     }
 
     public void onReportClick(View v) {
-        TextView text2 = (TextView) findViewById(ca.dagar.lunchranker.R.id.text2);
-        CharSequence[] mems = getResources().getTextArray(ca.dagar.lunchranker.R.array.msgMem);
+        TextView text2 = (TextView) findViewById(R.id.text2);
+        CharSequence[] mems = getResources().getTextArray(R.array.msgMem);
         int i = (int) (Math.random() * mems.length);
         CharSequence mem = mems[i];
         SpannableStringBuilder sb = new SpannableStringBuilder();

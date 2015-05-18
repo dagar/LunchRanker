@@ -68,13 +68,13 @@ public class VoteResultFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        View rootView = inflater.inflate(ca.dagar.lunchranker.R.layout.fragment_vote_result, container, false);
+        View rootView = inflater.inflate(R.layout.fragment_vote_result, container, false);
 
 
-        TextView restaurantTextView= (TextView) rootView.findViewById(ca.dagar.lunchranker.R.id.restaurantName);
+        TextView restaurantTextView= (TextView) rootView.findViewById(R.id.restaurantName);
         restaurantTextView.setText(restaurantName);
 
-        TextView voteCountTextView= (TextView) rootView.findViewById(ca.dagar.lunchranker.R.id.voteCount);
+        TextView voteCountTextView= (TextView) rootView.findViewById(R.id.voteCount);
         voteCountTextView.setText("Vote count: " + voteCount);
         return rootView;
     }

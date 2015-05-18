@@ -17,10 +17,10 @@ public class NavigationFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        View view = inflater.inflate(ca.dagar.lunchranker.R.layout.fragment_navigation, container, false);
+        View view = inflater.inflate(R.layout.fragment_navigation, container, false);
         final Context context = view.getContext();
 
-        ImageView home = (ImageView) view.findViewById(ca.dagar.lunchranker.R.id.navigationHome);
+        ImageView home = (ImageView) view.findViewById(R.id.navigationHome);
         home.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -29,7 +29,7 @@ public class NavigationFragment extends Fragment {
         });
 
 
-        ImageView results = (ImageView) view.findViewById(ca.dagar.lunchranker.R.id.navigationResults);
+        ImageView results = (ImageView) view.findViewById(R.id.navigationResults);
         results.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -38,7 +38,7 @@ public class NavigationFragment extends Fragment {
         });
 
 
-        ImageView edit = (ImageView) view.findViewById(ca.dagar.lunchranker.R.id.navigationEdit);
+        ImageView edit = (ImageView) view.findViewById(R.id.navigationEdit);
         results.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

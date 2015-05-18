@@ -25,18 +25,18 @@ public class LoginActivity extends Activity
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(ca.dagar.lunchranker.R.layout.activity_login);
+        setContentView(R.layout.activity_login);
 
         final Context context = this;
 
         final SharedPreferences settings = getSharedPreferences("APP_PREFS", 0);
 
 
-        Button login = (Button) findViewById(ca.dagar.lunchranker.R.id.login);
-        Button register = (Button) findViewById(ca.dagar.lunchranker.R.id.register);
+        Button login = (Button) findViewById(R.id.login);
+        Button register = (Button) findViewById(R.id.register);
 
-        final EditText userName = (EditText) findViewById(ca.dagar.lunchranker.R.id.userName);
-        final EditText password = (EditText) findViewById(ca.dagar.lunchranker.R.id.password);
+        final EditText userName = (EditText) findViewById(R.id.userName);
+        final EditText password = (EditText) findViewById(R.id.password);
         final String android_id = Settings.Secure.getString(getContentResolver(), Settings.Secure.ANDROID_ID);
 
         userName.setText(settings.getString(PREF_USER_NAME, ""));
@@ -63,8 +63,8 @@ public class LoginActivity extends Activity
                     return;
                 }
 
-                EditText login = (EditText) findViewById(ca.dagar.lunchranker.R.id.userName);
-                EditText password = (EditText) findViewById(ca.dagar.lunchranker.R.id.password);
+                EditText login = (EditText) findViewById(R.id.userName);
+                EditText password = (EditText) findViewById(R.id.password);
                 UserAccount account = new UserAccount(login.getText().toString(), password.getText().toString());
                 new RegisterTask(new RegisterCallback(LoginActivity.this)).execute(account);
 
@@ -76,7 +76,7 @@ public class LoginActivity extends Activity
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(ca.dagar.lunchranker.R.menu.menu_login, menu);
+        getMenuInflater().inflate(R.menu.menu_login, menu);
         return true;
     }
 
@@ -88,11 +88,10 @@ public class LoginActivity extends Activity
         int id = item.getItemId();
 
         //noinspection SimplifiableIfStatement
-        if (id == ca.dagar.lunchranker.R.id.action_settings) {
+        if (id == R.id.action_settings) {
             return true;
         }
 
         return super.onOptionsItemSelected(item);
     }
 }
-

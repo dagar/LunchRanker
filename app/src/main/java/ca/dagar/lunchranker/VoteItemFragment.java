@@ -80,12 +80,12 @@ public class VoteItemFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        View rootView = inflater.inflate(ca.dagar.lunchranker.R.layout.fragment_vote_item, container, false);
-        TextView restaurantTextView= (TextView) rootView.findViewById(ca.dagar.lunchranker.R.id.restaurantName);
+        View rootView = inflater.inflate(R.layout.fragment_vote_item, container, false);
+        TextView restaurantTextView= (TextView) rootView.findViewById(R.id.restaurantName);
         restaurantTextView.setText(restaurantName);
 
-        final ImageView voteUpImageView = (ImageView) rootView.findViewById(ca.dagar.lunchranker.R.id.voteUp);
-        final ImageView voteDownImageView = (ImageView) rootView.findViewById(ca.dagar.lunchranker.R.id.voteDown);
+        final ImageView voteUpImageView = (ImageView) rootView.findViewById(R.id.voteUp);
+        final ImageView voteDownImageView = (ImageView) rootView.findViewById(R.id.voteDown);
 
         if (voteValue)   {
             voteUpImageView.setBackgroundColor(Color.RED);

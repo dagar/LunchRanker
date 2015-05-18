@@ -38,7 +38,7 @@ public class ResultsActivity extends Activity implements VoteResultFragment.OnFr
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(ca.dagar.lunchranker.R.layout.activity_results);
+        setContentView(R.layout.activity_results);
         tryRenderResults();
     }
 
@@ -56,7 +56,7 @@ public class ResultsActivity extends Activity implements VoteResultFragment.OnFr
         FragmentManager fragmentManager = getFragmentManager();
         FragmentTransaction transaction = fragmentManager.beginTransaction();
         for (Restaurant r : restaurants) {
-            transaction.add(ca.dagar.lunchranker.R.id.resultList, VoteResultFragment.newInstance(r));
+            transaction.add(R.id.resultList, VoteResultFragment.newInstance(r));
         }
         transaction.commit();
     }
@@ -65,7 +65,7 @@ public class ResultsActivity extends Activity implements VoteResultFragment.OnFr
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(ca.dagar.lunchranker.R.menu.menu_login, menu);
+        getMenuInflater().inflate(R.menu.menu_login, menu);
         return true;
     }
 
@@ -77,7 +77,7 @@ public class ResultsActivity extends Activity implements VoteResultFragment.OnFr
         int id = item.getItemId();
 
         //noinspection SimplifiableIfStatement
-        if (id == ca.dagar.lunchranker.R.id.action_settings) {
+        if (id == R.id.action_settings) {
             return true;
         }
 

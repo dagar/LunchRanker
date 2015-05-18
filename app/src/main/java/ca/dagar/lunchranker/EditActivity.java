@@ -18,7 +18,7 @@ public class EditActivity extends Activity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(ca.dagar.lunchranker.R.layout.activity_results);
+        setContentView(R.layout.activity_results);
 
         GetPlacesTask placesTask = new GetPlacesTask();
     }
@@ -27,7 +27,7 @@ public class EditActivity extends Activity {
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(ca.dagar.lunchranker.R.menu.menu_login, menu);
+        getMenuInflater().inflate(R.menu.menu_login, menu);
         return true;
     }
 
@@ -39,7 +39,7 @@ public class EditActivity extends Activity {
         int id = item.getItemId();
 
         //noinspection SimplifiableIfStatement
-        if (id == ca.dagar.lunchranker.R.id.action_settings) {
+        if (id == R.id.action_settings) {
             return true;
         }
 
