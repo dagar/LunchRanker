@@ -1,4 +1,4 @@
-package com.naxsoft.lunchinhell;
+package ca.dagar.lunchranker;
 
 import android.app.Application;
 import android.test.ApplicationTestCase;
