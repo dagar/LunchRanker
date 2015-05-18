@@ -32,26 +32,34 @@ public class WebHelper {
             if (input !=null && !input.isEmpty()) {
                 //Create HTTP Headers for the content length and type
                 conn.setFixedLengthStreamingMode(input.getBytes().length);
-                conn.setRequestProperty("Content-Type", "application/json");
+                //conn.setRequestProperty("Content-Type", "application/json");
                 //Place the input data into the connection
                 conn.setDoOutput(true);
                 os = new BufferedOutputStream(conn.getOutputStream());
                 os.write(input.getBytes());
                 //clean up
                 os.flush();
+            } else {
+
             }
 
-            final InputStream inputFromServer = conn.getInputStream();
-
-            in = new BufferedReader(new InputStreamReader(inputFromServer));
-            String inputLine;
-            StringBuffer json = new StringBuffer();
-
-            while ((inputLine = in.readLine()) != null) {
-                json.append(inputLine);
+            final InputStream inputFromServer;
+            if (method.equals("POST")) {
+                inputFromServer = conn.getErrorStream();
+            } else {
+                inputFromServer = conn.getInputStream();
             }
 
-            return new WebResult(conn.getResponseCode(), json.toString());
+
+            StringBuffer serverResponse = new StringBuffer();
+            if (null != inputFromServer) {
+                in = new BufferedReader(new InputStreamReader(inputFromServer));
+                String inputLine;
+                while ((inputLine = in.readLine()) != null) {
+                    serverResponse.append(inputLine);
+                }
+            }
+            return new WebResult(conn.getResponseCode(), serverResponse.toString());
         } catch (Exception ex) {
             Log.d("network", "HTTP error", ex);
             return new WebResult(500, "");

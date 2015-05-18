@@ -20,10 +20,9 @@ import ca.dagar.lunchranker.service.RESTService;
 import ca.dagar.lunchranker.service.WebHelper;
 
 import java.util.ArrayList;
-import java.util.TreeSet;
 
 
-public class ResultsActivity extends Activity implements NavigationFragment.OnFragmentInteractionListener, VoteResultFragment.OnFragmentInteractionListener {
+public class ResultsActivity extends Activity implements VoteResultFragment.OnFragmentInteractionListener {
 
     /**
      * The listener that responds to intents sent back from the service
@@ -32,7 +31,7 @@ public class ResultsActivity extends Activity implements NavigationFragment.OnFr
         @Override
         public void onReceive(Context context, Intent intent) {
             ArrayList<Restaurant> restaurants = intent.getParcelableArrayListExtra("restaurants");
-            renderResults(new TreeSet<>(restaurants));
+            renderResults(restaurants);
         }
     };
 
@@ -53,7 +52,7 @@ public class ResultsActivity extends Activity implements NavigationFragment.OnFr
         }
     }
 
-    private void renderResults(TreeSet<Restaurant> restaurants) {
+    private void renderResults(ArrayList<Restaurant> restaurants) {
         FragmentManager fragmentManager = getFragmentManager();
         FragmentTransaction transaction = fragmentManager.beginTransaction();
         for (Restaurant r : restaurants) {
@@ -89,7 +88,7 @@ public class ResultsActivity extends Activity implements NavigationFragment.OnFr
     protected void onResume() {
         super.onResume();
         Log.d("test", "value");
-        IntentFilter filter = new IntentFilter(RESTService.REFRESH_RESTAURANTS);
+        IntentFilter filter = new IntentFilter(RESTService.REFRESH_VOTES);
         LocalBroadcastManager.getInstance(this).registerReceiver(onNotice, filter);
 
     }

@@ -33,17 +33,14 @@ public class VoteItemFragment extends Fragment {
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "restaurantName";
     private static final String ARG_PARAM2 = "restaurantId";
-    private static final String ARG_PARAM3 = "voteUp";
-    private static final String ARG_PARAM4 = "voteDown";
+    private static final String ARG_PARAM3 = "voteValue";
 
     VoteDS voteDS = new VoteDS();
 
     // TODO: Rename and change types of parameters
     private String restaurantName;
     private int restaurantId;
-
-    private boolean voteUpValue;
-    private boolean voteDownValue;
+    private boolean voteValue;
 
     private OnFragmentInteractionListener mListener;
 
@@ -60,8 +57,7 @@ public class VoteItemFragment extends Fragment {
         Bundle args = new Bundle();
         args.putString(ARG_PARAM1, restaurant.getName());
         args.putInt(ARG_PARAM2, restaurant.getId());
-        args.putBoolean(ARG_PARAM3, restaurant.getVoteType().isVoteUp());
-        args.putBoolean(ARG_PARAM4, restaurant.getVoteType().isVoteDown());
+        args.putBoolean(ARG_PARAM3, restaurant.isVoteValue());
 
         fragment.setArguments(args);
         return fragment;
@@ -77,8 +73,7 @@ public class VoteItemFragment extends Fragment {
         if (getArguments() != null) {
             restaurantName = getArguments().getString(ARG_PARAM1);
             restaurantId = getArguments().getInt(ARG_PARAM2);
-            voteUpValue = getArguments().getBoolean(ARG_PARAM3);
-            voteDownValue = getArguments().getBoolean(ARG_PARAM4);
+            voteValue = getArguments().getBoolean(ARG_PARAM3);
         }
     }
 
@@ -92,11 +87,10 @@ public class VoteItemFragment extends Fragment {
         final ImageView voteUpImageView = (ImageView) rootView.findViewById(R.id.voteUp);
         final ImageView voteDownImageView = (ImageView) rootView.findViewById(R.id.voteDown);
 
-        if (voteUpValue)   {
+        if (voteValue)   {
             voteUpImageView.setBackgroundColor(Color.RED);
             voteUpImageView.setEnabled(false);
-        }
-        if (voteDownValue) {
+        } else {
             voteDownImageView.setBackgroundColor(Color.RED);
             voteDownImageView.setEnabled(false);
         }
@@ -105,13 +99,12 @@ public class VoteItemFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 if(WebHelper.isOnline(v.getContext())) {
+                    voteValue = true;
+
                     voteUpImageView.setEnabled(false);
                     voteUpImageView.setBackgroundColor(Color.RED);
-                    voteUpValue = true;
-
                     voteDownImageView.setEnabled(true);
                     voteDownImageView.setBackgroundColor(Color.WHITE);
-                    voteDownValue = false;
 
 
                     Toast.makeText(v.getContext(), "Sending voteUp for " + restaurantName + " id " + restaurantId, Toast.LENGTH_SHORT).show();
@@ -130,20 +123,20 @@ public class VoteItemFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 if(WebHelper.isOnline(v.getContext())) {
+                    voteValue = false;
+
                     voteDownImageView.setEnabled(false);
                     voteDownImageView.setBackgroundColor(Color.RED);
-                    voteDownValue = true;
 
                     voteUpImageView.setEnabled(true);
                     voteUpImageView.setBackgroundColor(Color.WHITE);
-                    voteUpValue = false;
 
                     Toast.makeText(v.getContext(), "Sending voteDown for " + restaurantName + " id " + restaurantId, Toast.LENGTH_SHORT).show();
                     // voteDS.submitVote(new Vote(restaurantId, -1));
 
                     Intent intent = new Intent(v.getContext(), RESTService.class);
                     intent.setAction(RESTService.SAVE_VOTE);
-                    intent.putExtra("vote", new Vote(restaurantId, -1));
+                    intent.putExtra("vote", new Vote(restaurantId, 0));
                     v.getContext().startService(intent);
                 } else {
                     Toast.makeText(v.getContext(), "No Network Connectivity.", Toast.LENGTH_LONG).show();

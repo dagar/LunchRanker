@@ -1,28 +1,51 @@
 package ca.dagar.lunchranker.data;
 
+import android.os.Looper;
+import android.util.JsonReader;
+
+import ca.dagar.lunchranker.Consts;
+import ca.dagar.lunchranker.asyncTasks.ParcelableList;
 import ca.dagar.lunchranker.domain.Restaurant;
-import ca.dagar.lunchranker.domain.VoteState;
+import ca.dagar.lunchranker.service.WebHelper;
+import ca.dagar.lunchranker.service.WebResult;
 
-import java.util.ArrayList;
-import java.util.Random;
+import java.io.StringReader;
 
-/**
- * Created by Iouri on 24/04/2015.
- */
 public class RestaurantDS {
+    public ParcelableList<Restaurant> getRestaurants() throws Exception {
+        if (Looper.myLooper() == Looper.getMainLooper()) { throw new AssertionError("This code should not run on the main thread"); }
 
-    private static final int randMin = 2;
-    private static final int randMax = 12;
-    private Random rand = new Random(System.currentTimeMillis());
+        WebHelper webHelper = new WebHelper();
+        ParcelableList<Restaurant> restaurants = new ParcelableList<>();
+
+        WebResult result = webHelper.executeHTTP(Consts.RESTAURANT_LIST, "GET", null);
+        JsonReader reader = new JsonReader(new StringReader(result.getHttpBody()));
+        reader.beginArray();
 
 
+        while (reader.hasNext()) {
+            reader.beginObject();
+            String id = "";
+            String restaurantName = "";
+            String vote = "";
+            while (reader.hasNext()) {
+                String name = reader.nextName();
+                if (name.equals("id")) {
+                    id = reader.nextString();
+                } else if (name.equals("name")) {
+                    restaurantName = reader.nextString();
+                } else if (name.equals("votes")) {
+                    vote = reader.nextString();
+                } else {
+                    reader.skipValue();
+                }
+            }
 
-    public ArrayList<Restaurant> getRestaurants() {
-        ArrayList<Restaurant> result = new ArrayList<>();
-        for (int i = 0; i < rand.nextInt((randMax - randMin) + 1) + randMin; i++) {
-            boolean vote = rand.nextBoolean();
-            result.add(new Restaurant("Name " + i, i, i, new VoteState(vote, !vote)));
+            boolean voteValue = vote.equals("1") ? true : false;
+            restaurants.add(new Restaurant(restaurantName, Integer.parseInt(id), 0, voteValue));
+            reader.endObject();
         }
-        return result;
+        reader.endArray();
+        return restaurants;
     }
 }
