@@ -10,6 +10,8 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.Toast;
 
+import ca.dagar.lunchranker.asyncTasks.GetPlacesTask;
+
 
 public class EditActivity extends Activity {
 
@@ -17,6 +19,8 @@ public class EditActivity extends Activity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_results);
+
+        GetPlacesTask placesTask = new GetPlacesTask();
     }
 
 
